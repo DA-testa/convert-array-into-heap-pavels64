@@ -42,22 +42,16 @@ def file(filename):
 
 def sift_down(data, i, swaps):
     min_index = i
-    
     left = 2 * i + 1
-    if left < len(data):
-        _, min_index = min(enumerate([data[left], data[min_index]]), key=lambda x: x[1])
-        if min_index != i:
-            swaps.append((i, min_index))
-            data[i], data[min_index] = data[min_index], data[i]
-            sift_down(data, min_index, swaps)
-    
+    if left < len(data) and data[left] < data[min_index]:
+        min_index = left
     right = 2 * i + 2
-    if right < len(data):
-        _, min_index = min(enumerate([data[right], data[min_index]]), key=lambda x: x[1])
-        if min_index != i:
-            swaps.append((i, min_index))
-            data[i], data[min_index] = data[min_index], data[i]
-            sift_down(data, min_index, swaps)
+    if right < len(data) and data[right] < data[min_index]:
+        min_index = right
+    if i != min_index:
+        swaps.append((i, min_index))
+        data[i], data[min_index] = data[min_index], data[i]
+        sift_down(data, min_index, swaps)
 
 
 def build_heap(data):
