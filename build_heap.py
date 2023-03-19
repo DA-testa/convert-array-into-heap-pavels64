@@ -11,52 +11,48 @@ def keyboard():
         return data
     
     except ValueError:
-        print("Invalid input: n must be a positive integer")
         return None
 
 
 
-def file(filename):
+def file(name):
     try:
-        with open(f"./tests/{filename}") as f:
+        with open(f"./tests/{name}") as f:
             contents = f.readlines()
     except FileNotFoundError:
         print("File not found")
         return None
     except:
-        print("Error reading file")
         return None
     
     n = contents[0].strip()
     if not n:
-        print("Invalid input: n not provided")
         return None
     
     data = list(map(int, contents[1].strip().split(" ")))
     if not data:
-        print("Invalid input: data not provided")
         return None
     
     return data
 
 
 def sift_down(data, i, swaps):
-    min_index = i
+    min = i
     left = 2 * i + 1
     right = 2 * i + 2
     
-    if left < len(data) and data[left] < data[min_index]:
-        min_index = left
+    if left < len(data) and data[left] < data[min]:
+        min = left
         
-    if right < len(data) and data[right] < data[min_index]:
-        min_index = right
+    if right < len(data) and data[right] < data[min]:
+        min = right
         
-    if i == min_index:
+    if i == min:
         return
     
-    swaps.append((i, min_index))
-    data[i], data[min_index] = data[min_index], data[i]
-    sift_down(data, min_index, swaps)
+    swaps.append((i, min))
+    data[i], data[min] = data[min], data[i]
+    sift_down(data, min, swaps)
 
 
 def build_heap(data):
@@ -84,9 +80,9 @@ def main():
                 print(i, j)
 
     elif input_method == "F":
-        filename = input().strip()
-        if str(filename[-1]) != "a":
-            data = file(filename)
+        name = input().strip()
+        if str(name[-1]) != "a":
+            data = file(name)
             if data:
                 nulle, swaps = build_heap(data)
                 print(nulle)
