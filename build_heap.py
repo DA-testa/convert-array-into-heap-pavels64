@@ -43,15 +43,20 @@ def file(filename):
 def sift_down(data, i, swaps):
     min_index = i
     left = 2 * i + 1
+    right = 2 * i + 2
+    
     if left < len(data) and data[left] < data[min_index]:
         min_index = left
-    right = 2 * i + 2
+        
     if right < len(data) and data[right] < data[min_index]:
         min_index = right
-    if i != min_index:
-        swaps.append((i, min_index))
-        data[i], data[min_index] = data[min_index], data[i]
-        sift_down(data, min_index, swaps)
+        
+    if i == min_index:
+        return
+    
+    swaps.append((i, min_index))
+    data[i], data[min_index] = data[min_index], data[i]
+    sift_down(data, min_index, swaps)
 
 
 def build_heap(data):
